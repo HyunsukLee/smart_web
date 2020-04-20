@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="com.smartweb.admin.admin">
+	
+	<!-- 검색 공통 부분 -->
+	<sql id="selectAdminCommon">
+		SELECT AD.*, ROWNUM AS RNUM 
+		FROM (
+			SELECT *
+			FROM SW_ADMIN
+			WHERE DB_STS='A'
+			<isNotEmpty property="START_DATE"><isNotEmpty property="END_DATE">
+				AND TO_CHAR(CRE_DATE, 'YYYY-MM-DD') BETWEEN #START_DATE# AND #END_DATE#
+			</isNotEmpty></isNotEmpty>
+			<isNotEmpty property="ADM_STS">
+				<isNotEqual property="ADM_STS" compareValue="ALL">
+					AND ADM_STS = #ADM_STS#
+				</isNotEqual>
+			</isNotEmpty>
+			<isNotEmpty property="SEARCH">
+				<isEqual property="ADM_SEARCH_BY" compareValue="ALL">
+					AND (ADM_NM LIKE '%'||#SEARCH#||'%' OR ADM_ID LIKE '%'||#SEARCH#||'%' OR TEL_NO LIKE '%'||#SEARCH#||'%'
+					OR EMAIL LIKE '%'||#SEARCH#||'%' OR CORP_NM LIKE '%'||#SEARCH#||'%' OR PART LIKE '%'||#SEARCH#||'%'
+					OR OPOS LIKE '%'||#SEARCH#||'%' OR MOP_NO LIKE '%'||#SEARCH#||'%')
+				</isEqual>
+				<isEqual property="ADM_SEARCH_BY" compareValue="ADM_NM">
+					AND ADM_NM LIKE '%'||#SEARCH#||'%'
+				</isEqual>
+				<isEqual property="ADM_SEARCH_BY" compareValue="ADM_ID">
+					AND ADM_ID LIKE '%'||#SEARCH#||'%'
+				</isEqual>
+				<isEqual property="ADM_SEARCH_BY" compareValue="TEL_NO">
+					AND TEL_NO LIKE '%'||#SEARCH#||'%'
+				</isEqual>
+				<isEqual property="ADM_SEARCH_BY" compareValue="EMAIL">
+					AND EMAIL LIKE '%'||#SEARCH#||'%'
+				</isEqual>
+				<isEqual property="ADM_SEARCH_BY" compareValue="CORP_NM">
+					AND CORP_NM LIKE '%'||#SEARCH#||'%'
+				</isEqual>
+				<isEqual property="ADM_SEARCH_BY" compareValue="PART">
+					AND PART LIKE '%'||#SEARCH#||'%'
+				</isEqual>
+				<isEqual property="ADM_SEARCH_BY" compareValue="OPOS">
+					AND OPOS LIKE '%'||#SEARCH#||'%'
+				</isEqual>
+				<isEqual property="ADM_SEARCH_BY" compareValue="MOP_NO">
+					AND MOP_NO LIKE '%'||#SEARCH#||'%'
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty property="ORDER_BY">
+				<isEqual property="ORDER_BY" compareValue="ADM_SEQ">
+					ORDER BY ADM_SEQ
+				</isEqual>
+				<isEqual property="ORDER_BY" compareValue="ADM_NM">
+					ORDER BY ADM_NM
+				</isEqual>
+				<isEqual property="ORDER_BY" compareValue="ADM_ID">
+					ORDER BY ADM_ID
+				</isEqual>
+				<isEqual property="ORDER_BY" compareValue="CRE_DATE">
+					ORDER BY CRE_DATE
+				</isEqual>
+				<isEqual property="ORDER_BY" compareValue="ADM_STS">
+					ORDER BY ADM_STS
+				</isEqual>
+				<isEqual property="ORDER_SC" compareValue="ASC">
+					ASC
+				</isEqual>
+				<isEqual property="ORDER_SC" compareValue="DESC">
+					DESC
+				</isEqual>
+			</isNotEmpty>
+		) AD
+	</sql>
+	
+	<!-- 관리자 총 건수 -->
+	<select id="selectAdminCnt" resultClass="int">
+		SELECT NVL(count(1),0) FROM 
+		( <include refid="selectAdminCommon"/> )
+	</select>
+	
+	<!-- 관리자 리스트 -->
+	<select id="selectAdminList" resultClass="HashMap">
+		SELECT ADM_SEQ, ADM_NM, ADM_ID, TEL_NO, EMAIL, CRE_DATE, ADM_STS FROM 
+		( <include refid="selectAdminCommon" />)
+		where 1=1
+		<isNotEmpty property="START_ROW"><isNotEmpty property="END_ROW">
+			AND RNUM BETWEEN #START_ROW# AND #END_ROW#
+		</isNotEmpty></isNotEmpty>	
+	</select>
+</sqlMap>

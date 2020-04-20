@@ -1,0 +1,72 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/include/common.jspf"%>
+
+<body>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	if($("#adm_sts").val()=='D'){	//미사용 상태
+		window.open("/admin/admin_updatePW.do?ADMIN_SEQ="+$("#adm_seq").val(), '비밀번호변경', 'width=500,height=400,menubar=no,location=no,status=no,scrollbars=no,resize=none');
+	}
+	
+});
+	function menuOnOff(obj){
+		if (document.getElementById("subMenu_" + obj) != null) {
+			if (document.getElementById("subMenu_" + obj).style.display == 'none') {
+				document.getElementById("subMenu_" + obj).style.display = '';
+			}else{
+				document.getElementById("subMenu_" + obj).style.display = 'none';
+			}
+		}
+	}
+</script>
+	
+<!-- Warp Start -->
+<div id="wrap">
+
+		<!-- Header Start -->
+		<div id="header">
+			<div class="logo">
+				<a href="/"><!--<img src="/images/common/top_logo.gif" />--></a>
+			</div>
+			<div class="btn">
+				<a href="/login/logout.do"><img src="/images/common/btn_logout.gif" /></a>
+			</div>
+		</div>
+		<!-- Header end -->
+		
+<!-- Container Start -->		
+<div id="container">
+	<div id="left">
+		<div class="user">
+			<input type="hidden" id="adm_sts" value="${sessionScope.adm_sts}">
+			<input type="hidden" id="adm_seq" value="${sessionScope.adm_seq}">
+			<img src="/images/common/ico_user.gif" /> ${sessionScope.adm_nm}
+		</div>
+		
+		<div id="lnb">
+			<div class="left_menu" id="left_menu">
+				<%-- 
+				<div class=menu<c:if test="${fn:contains(pageContext.request.requestURI, '/cust/')}">_on</c:if> onclick="menuOnOff('0');" style="cursor:pointer">회원 관리</div>
+				<div class="submenu" id="subMenu_0" style="display:block;">
+					<ul>
+						<li><a href="/cust/cust_list.do" >회원 관리</a></li>
+					</ul>
+				</div>
+				<div class=menu<c:if test="${fn:contains(pageContext.request.requestURI, '/notice/')}">_on</c:if> onclick="menuOnOff('1');" style="cursor:pointer">공지사항 관리</div>
+				<div class="submenu" id="subMenu_1" style="display:block;">
+					<ul>
+						<li><a href="/notice/notice_list.do" >공지사항 관리</a></li>
+					</ul>
+				</div>
+				--%>
+				<div class=menu<c:if test="${fn:contains(pageContext.request.requestURI, '/admin/')}">_on</c:if> onclick="menuOnOff('2');" style="cursor:pointer">시스템 관리</div>
+				<div class="submenu" id="subMenu_6" style="display:block;">
+					<ul>
+						<li><a href="/admin/admin_list.do" >관리자계정 관리</a></li>
+						<li><a href="/admin/version.do" >버전 관리</a></li>						
+					</ul>
+				</div>															
+			</div>
+		</div>		
+	</div>		

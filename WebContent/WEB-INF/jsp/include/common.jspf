@@ -1,0 +1,24 @@
+ <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="tag" uri="/WEB-INF/tld/custom_tag.tld" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>SmartWeb Site 관리자</title>
+	<link type="text/css" rel="stylesheet" href="/include/css/common.css"/>
+	<link type="text/css" rel="stylesheet" href="/include/css/contents.css"/>
+	<link type="text/css" rel="stylesheet" href="/include/css/smartweb.css"/>
+	<link type="text/css" rel="stylesheet" href="/include/css/jquery-ui-1.8.13.custom.css" />
+	<script type="text/javascript" src="/include/js/json2.js"></script>
+	<script type="text/javascript" src="/include/js/jquery-1.6.4.js"></script>
+	<script type="text/javascript" src="/include/js/jquery.form.js"></script>
+	<script type="text/javascript" src="/include/js/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="/include/js/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="/include/js/jquery.ui.datepicker.js"></script>	
+</head>

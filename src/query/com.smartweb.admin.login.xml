@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="com.smartweb.admin.login">
+
+	<!-- 로그인 -->
+	<select id="selectAdmin" resultClass="java.util.HashMap">
+        SELECT ADM_SEQ, ADM_TYPE, ADM_ID, ADM_NM, ADM_PWD, ADM_STS, DB_STS, FAIL_CNT 
+        FROM SW_ADMIN
+        WHERE DB_STS='A' AND ADM_ID=#ADM_ID#
+	</select>
+
+	<!-- 실패횟수, 상태값 변경 -->
+	<update id="updateAdmin">
+		UPDATE SW_ADMIN
+		SET
+			FAIL_CNT = #FAIL_CNT#
+			<isNotEmpty property="ADM_STS">
+				, ADM_STS = #ADM_STS#
+			</isNotEmpty>
+		WHERE DB_STS='A'
+			AND ADM_ID=#ADM_ID#
+	</update>
+
+	
+	<!-- 로그인 로그 -->
+	<insert id="insertLogin">
+		<selectKey keyProperty="LOGIN_SEQ" resultClass="java.lang.String">
+			SELECT SW_ADMIN_LOGIN_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO SW_ADMIN_LOGIN(
+			LOGIN_SEQ
+			, ADM_SEQ
+			, LOGIN_ID
+			, LOGIN_IP
+			, LOGIN_DATE
+		)VALUES(
+			#LOGIN_SEQ#
+			, #ADM_SEQ#
+			, #LOGIN_ID#
+			, #LOGIN_IP#
+			, sysdate
+		)
+	</insert>
+	
+	<!-- 로그아웃 로그 -->
+	<update id="updateLogin" parameterClass="java.lang.String">
+		UPDATE SW_ADMIN_LOGIN
+		SET LOGOUT_DATE = sysdate
+		WHERE LOGIN_SEQ = #LOGIN_SEQ#
+	</update>
+    
+</sqlMap>

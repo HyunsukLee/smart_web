@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>Smart_Web_admin</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.do</welcome-file>
+  </welcome-file-list>
+
+  <!-- 스프링 컨텍스트 로더 리스너 등록    
+  <listener>
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+  <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>/WEB-INF/framework/*.xml</param-value>
+  </context-param>
+  -->
+  
+  <!-- DB Connection -->
+  <resource-ref>
+  	<description>DB Connection</description>
+  	<res-ref-name>jdbc/smartadm</res-ref-name>
+  	<res-type>oracle.jdbc.pool.OracleDataSource</res-type>
+     <res-auth>Container</res-auth>
+  </resource-ref>
+  
+  <servlet>
+  	<servlet-name>framework</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>/WEB-INF/framework/*.xml</param-value>
+  	</init-param>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>framework</servlet-name>
+  	<url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  
+  <filter>
+  	<filter-name>Encoding</filter-name>
+  	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+  	<init-param>
+  		<param-name>encoding</param-name>
+  		<param-value>UTF-8</param-value>
+  	</init-param>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>Encoding</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <!-- XSS적용을 위한  필터 설정  
+  <filter>   
+	<filter-name>XSS</filter-name>    
+	<filter-class>com.smartdial.admin.filter.CrossScriptingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>XSS</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  -->
+  
+  <!-- 에러 발생 시 보여주고자 하는 파일 설정 
+  <error-page>
+  	<error-code>403</error-code>
+  	<location>/common/error.html</location>
+  </error-page>
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/common/error.html</location>
+  </error-page>
+  <error-page>
+  	<error-code>405</error-code>
+  	<location>/common/error.html</location>
+  </error-page>
+  <error-page>
+  	<error-code>500</error-code>
+  	<location>/common/error.html</location>
+  </error-page>
+  -->  
+</web-app>
